@@ -1,8 +1,19 @@
 import sys
+from fastapi import FastAPI
 
-def main():
-    python_version = sys.version
-    print("Python version: " + python_version)
+app = FastAPI(title="Local Business Finder")
 
-if __name__ == "__main__":
-    main()
+@app.get("/")
+def read_root():
+    return {
+        "service": "Local Business Finder",
+        "status": "ready",
+        "python_version": sys.version,
+    }
+
+@app.get("/search")
+def search_business(city: str, category: str):
+    return {
+        "message": f"Searching for '{category}' in {city}...",
+        "results": [],
+    }
